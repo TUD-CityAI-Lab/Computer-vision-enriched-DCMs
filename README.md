@@ -7,3 +7,5 @@ The file "data_CV_DCM.csv" contains data from a stated choice experiment. In the
 
 ![screenshot_stated_choice](screenshot_stated_choice.png)<br>
 
+More details about the data collection can be found here
+[a relative link](data_CV_DCM.csv)
