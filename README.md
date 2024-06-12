@@ -27,7 +27,7 @@ Also, this table summarizes the most important variables in the data:
 | `test` | 1 if the respondent was in the test set |
 
 More details about the data collection can be found in section 3 of the associated paper:
-[Van Cranenburgh & Garrido-Valenzuela (2023)](VanCranenburgh2023.pdf)
+[Van Cranenburgh & Garrido-Valenzuela (2024)](VanCranenburgh2023.pdf)
 
 Code to train CV-DCMs is coming soon.
 
