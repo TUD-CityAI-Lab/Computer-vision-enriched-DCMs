@@ -8,7 +8,7 @@ The file "data_CV_DCM.csv" contains data from a stated choice experiment. In the
 
 ![screenshot_stated_choice](screenshot_stated_choice.png)<br>
 
-Also, this table summarizes the most important variables in the data:
+The table below lists the most important variables in the data set:
 
 | Variable | Description |
 | --- | --- |
