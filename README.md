@@ -29,7 +29,6 @@ The table below lists the most important variables in the data set:
 More details about the data collection can be found in section 3 of the associated paper:
 [Van Cranenburgh & Garrido-Valenzuela (2024)](VanCranenburgh2023.pdf)
 
-Code to train CV-DCMs is coming soon.
 
 ## License CC BY-NC-SA 4.0
 
