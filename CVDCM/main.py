@@ -26,9 +26,7 @@ if __name__ == "__main__":
     # Initialise paths relative to repo root
     repo_root = Path(__file__).resolve().parent.parent # Adjust as necessary
     data_dir = repo_root / "data"
-    # img_path = data_dir / "images"
-    # img_path = Path('/Users/sandervancranenburgh/Documents/Repos_and_data/Data/window_project_data/images') # Mac
-    img_path = Path('/home/sandervancranenburgh/Documents/repos/Data/window_project_data/images') # Linux
+    img_path = data_dir / "images"
     choice_data_file = data_dir / "data_CV_DCM.csv"
 
     # Now use img_path and choice_data_file in your code
