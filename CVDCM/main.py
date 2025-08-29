@@ -27,8 +27,9 @@ if __name__ == "__main__":
     repo_root = Path(__file__).resolve().parent.parent # Adjust as necessary
     data_dir = repo_root / "data"
     # img_path = data_dir / "images"
-    img_path =  Path('/Users/sandervancranenburgh/Documents/Repos_and_data/Data/window_project_data/images')
-    choice_data_file = data_dir / "data_CV_DCM_png.csv"
+    # img_path = Path('/Users/sandervancranenburgh/Documents/Repos_and_data/Data/window_project_data/images') # Mac
+    img_path = Path('/home/sandervancranenburgh/Documents/repos/Data/window_project_data/images') # Linux
+    choice_data_file = data_dir / "data_CV_DCM.csv"
 
     # Now use img_path and choice_data_file in your code
     print("Image path:", img_path)
@@ -57,7 +58,7 @@ if __name__ == "__main__":
     learning_rate = 1e-5
     batch_size = 10
     wd = 0.1
-    num_epochs = 1
+    num_epochs = 100
     patience = 5
     workers = 2
     printLog(f'Hyperparameters: learning_rate = {learning_rate}, batch_size = {batch_size}, wd = {wd}')
@@ -85,8 +86,8 @@ if __name__ == "__main__":
     printLog(f'\nBehavioural weights of the model after scaling back:')
     beta_hhc = best_model.dcm_p.weight[0][0].cpu().item()
     beta_tti = best_model.dcm_p.weight[0][1].cpu().item()
-    printLog(f'beta_tti = {beta_hhc * (1/225):10.3f}')
-    printLog(f'beta_hhc = {beta_tti * (1/15):10.3f}')
+    printLog(f'beta_hhc = {beta_hhc * (1/225):10.3f}')
+    printLog(f'beta_tti = {beta_tti * (1/15):10.3f}')
     
     # Find the index where test_loss is minimum
     min_loss_index = test_loss.index(min(test_loss))
