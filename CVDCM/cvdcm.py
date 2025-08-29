@@ -8,7 +8,7 @@ class cvdcm_model(nn.Module):
         super(cvdcm_model, self).__init__()
         
         # Define the CNN
-        self.cvmodel = torch.hub.load('facebookresearch/deit:main', 'deit_base_patch16_384', pretrained=True)
+        self.cvmodel = torch.hub.load('facebookresearch/deit:main', 'deit_base_patch16_224', pretrained=True)
         
         # Define the linear-additive utility RUM for the feature map
         self.dcm_f = nn.Linear(1000,1, bias = False)
@@ -20,14 +20,14 @@ class cvdcm_model(nn.Module):
         self.dcm_p.weight = torch.nn.Parameter(self.dcm_p.weight.to(torch.float32))
 
         # Starting values for traffic lights and cycling time
-        self.dcm_p.weight.data[0][0].fill_(-0.70) # beta_tl
-        self.dcm_p.weight.data[0][1].fill_(-0.95) # beta_tt
+        self.dcm_p.weight.data[0][0].fill_(-0.90) # beta_hhc
+        self.dcm_p.weight.data[0][1].fill_(-0.20) # beta_tti
 
         if path_pretrained_model is not None:
             self.load_state_dict(torch.load(path_pretrained_model), strict=True)
 
     
-    def forward_once(self, image,tl,tt):
+    def forward_once(self,image,c,tt):
         
         # Extract features from image
         feature_map = self.cvmodel(image)            
@@ -37,11 +37,11 @@ class cvdcm_model(nn.Module):
         V_f = self.dcm_f(feature_map) 
         
         # Add dimension
-        tl = tl[:,None]
+        c = c[:,None]
         tt = tt[:,None]
-        
+
         # Concatenate
-        x = torch.cat((tl,tt),1).to(torch.float32)
+        x = torch.cat((c,tt),1).to(torch.float32)
         
         # Utility from numeric attributes
         V_dcm = self.dcm_p(x).to(torch.float)
@@ -50,10 +50,10 @@ class cvdcm_model(nn.Module):
         V = V_f + V_dcm
 
         return V
-    
-    def forward(self, image1, image2, tl1, tl2, tt1, tt2):
-        V1 = self.forward_once(image1,tl1,tt1)
-        V2 = self.forward_once(image2,tl2,tt2)
+
+    def forward(self, image1, image2, c1, tt1, c2, tt2):
+        V1 = self.forward_once(image1, c1, tt1)
+        V2 = self.forward_once(image2, c2, tt2)
 
         # Return probability
         prob = torch.div(1,torch.add(torch.exp(torch.subtract(V2, V1)),1))   # out = probability of alt1 (left)

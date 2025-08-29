@@ -4,9 +4,9 @@ This repo contains the data that are used to train the computer vision-enriched 
 
 ## Data
 
-The file "data_CV_DCM.csv" contains data from a stated choice experiment. In the experiment, respondents were presented two residential location alternatives, and were asked to indicate which alternative they would choose. Both alternatives comprise travel time (TT), monthly housing cost (C) and an image showing the street-level conditions. Here, you see a screenshot of a choice task from the stated choice experiment.
+The file [data_CV_DCM.csv](data/data_CV_DCM.csv) contains data from a stated choice experiment. In the experiment, respondents were presented two residential location alternatives, and were asked to indicate which alternative they would choose. Both alternatives comprise travel time (TT), monthly housing cost (C) and an image showing the street-level conditions. Here, you see a screenshot of a choice task from the stated choice experiment.
 
-![screenshot_stated_choice](assets/images/screenshot_stated_choice.png)<br>
+![screenshot_stated_choice](assets/screenshot_stated_choice.png)<br>
 
 The table below lists the most important variables in the data set:
 

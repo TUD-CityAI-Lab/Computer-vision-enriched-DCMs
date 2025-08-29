@@ -56,9 +56,9 @@ def train(model, train_loader, test_loader, criterion, wd, learning_rate, patien
 
             # Print progress
             printLog(f"{dateStr}\tEpoch {epoch:03d}  CEtrain | CEtest | CEtest_best\t {train_loss:0.3f} | {test_loss:0.3f} | {min(test_loss_all):0.3f} {'+' * counter}") 
-            beta_tl = best_model.dcm_p.weight[0][0].cpu().item()
-            beta_tt = best_model.dcm_p.weight[0][1].cpu().item()
-            printLog(f'beta_tl = {beta_tl:10.3f}, beta_tt = {beta_tt:10.3f}')
+            beta_hhc = best_model.dcm_p.weight[0][0].cpu().item()
+            beta_tti = best_model.dcm_p.weight[0][1].cpu().item()
+            printLog(f'beta_hhc = {beta_hhc:10.3f}, beta_tti = {beta_tti:10.3f}')
 
         if counter >= patience:
             break
@@ -73,18 +73,18 @@ def train_epoch(model, data_loader, optimizer, criterion, device, epoch):
     total_loss = 0
     num_instances = 0
 
-    for j, (image1, image2, y_label, tl1, tl2, tt1, tt2, img_name1, img_name2, ID) in enumerate(data_loader):
+    for j, (image1, image2, y_label, c1, c2, tt1, tt2, img_name1, img_name2, ID) in enumerate(data_loader):
 
         if j % (len(data_loader) // np.min((50,len(data_loader)))) == 0:
             sys.stdout.write(f"\rEpoch {epoch:03d} -- Training | {(j / len(data_loader)) * 100:3.0f}% of the batches completed")
             sys.stdout.flush() 
 
         # Push data to cuda
-        image1, image2, tl1, tl2, tt1, tt2, y_label = data_to_cuda(image1, image2, tl1, tl2, tt1, tt2, y_label, device) 
+        image1, image2, c1, c2, tt1, tt2, y_label = data_to_cuda(image1, image2, c1, c2, tt1, tt2, y_label, device) 
 
         # Forward pass
-        prob, V1, V2 = model(image1, image2, tl1, tl2, tt1, tt2)
-        
+        prob, V1, V2 = model(image1, image2, c1, tt1, c2, tt2)
+
         # Compute loss
         loss = criterion(prob, y_label)
 
@@ -109,8 +109,8 @@ def eval_epoch(model, data_loader, criterion, device, epoch):
     total_loss = 0
     num_instances = 0
 
-    for j, (image1, image2, y_label, tl1, tl2, tt1, tt2, img_name1, img_name2, ID) in enumerate(data_loader):
-        
+    for j, (image1, image2, y_label, c1, c2, tt1, tt2, img_name1, img_name2, ID) in enumerate(data_loader):
+
         if j % (len(data_loader) // np.min((50,len(data_loader)))) == 0:
             sys.stdout.write(f"\rEpoch {epoch:03d} -- Evaluation | {(j / len(data_loader)) * 100:3.0f}% of the batches completed")
             sys.stdout.flush() 
@@ -118,10 +118,10 @@ def eval_epoch(model, data_loader, criterion, device, epoch):
         with torch.no_grad():
             
             # Push data to cuda
-            image1, image2, tl1, tl2, tt1, tt2, y_label = data_to_cuda(image1, image2, tl1, tl2, tt1, tt2, y_label, device) 
+            image1, image2, c1, c2, tt1, tt2, y_label = data_to_cuda(image1, image2, c1, c2, tt1, tt2, y_label, device)
 
             # Forward pass
-            prob, V1, V2 = model(image1, image2, tl1, tl2, tt1, tt2)
+            prob, V1, V2 = model(image1, image2, c1, tt1, c2, tt2)
 
             # Compute loss
             loss = criterion(prob, y_label)

@@ -22,13 +22,17 @@ if __name__ == "__main__":
 
     # Initialise paths
     working_folder = Path(os.path.dirname(os.path.realpath(__file__)))
-    sys_os = platform.system()
-    if sys_os == 'Darwin':
-        img_path =  Path('/Users/sandervancranenburgh/Documents/Repos_and_data/Data/bicycle_project_roos/images')
-        choice_data_file = Path(os.getcwd()) / 'data' / 'cv_dcm.csv'
-    elif sys_os == 'Linux':
-        img_path =  Path('/home/sandervancranenburgh/Documents/repos/Data/bicycle_project_roos/images_scaled')
-        choice_data_file = Path('/home/sandervancranenburgh/Documents/repos/Data/bicycle_project_roos/choice_data/cv_dcm.csv')
+
+    # Initialise paths relative to repo root
+    repo_root = Path(__file__).resolve().parent.parent # Adjust as necessary
+    data_dir = repo_root / "data"
+    # img_path = data_dir / "images"
+    img_path =  Path('/Users/sandervancranenburgh/Documents/Repos_and_data/Data/window_project_data/images')
+    choice_data_file = data_dir / "data_CV_DCM_png.csv"
+
+    # Now use img_path and choice_data_file in your code
+    print("Image path:", img_path)
+    print("Choice data file:", choice_data_file)
 
     # Keep diary
     keep_diary = 1
@@ -53,7 +57,7 @@ if __name__ == "__main__":
     learning_rate = 1e-5
     batch_size = 10
     wd = 0.1
-    num_epochs = 80
+    num_epochs = 1
     patience = 5
     workers = 2
     printLog(f'Hyperparameters: learning_rate = {learning_rate}, batch_size = {batch_size}, wd = {wd}')
@@ -62,17 +66,12 @@ if __name__ == "__main__":
     dataset_train = ImageChoiceDataset(data_file = choice_data_file, img_path = img_path, set_type = 'train', transform = True)
     dataset_test  = ImageChoiceDataset(data_file = choice_data_file, img_path = img_path, set_type = 'test' , transform = True)
 
-    # Take a small sample of the data
-    # dataset_train = torch.utils.data.Subset(dataset_train, range(200))
-    # dataset_test  = torch.utils.data.Subset(dataset_test,  range(100))
-
     # Create dataloaders
     train_loader = DataLoader(dataset=dataset_train, batch_size=batch_size, shuffle=True, num_workers=workers, pin_memory=True)
     test_loader  = DataLoader(dataset=dataset_test,  batch_size=batch_size, shuffle=False,num_workers=workers, pin_memory=True)
 
     # Load the model
     working_folder = Path(os.path.dirname(os.path.realpath(__file__)))
-    # path_pretrained_model = working_folder /'0816_28_12_2023_CVDCMmodel_CE0642.pt'  
     path_pretrained_model = None
     model = cvdcm_model(path_pretrained_model).to(device=device,non_blocking=False)
 
@@ -84,10 +83,10 @@ if __name__ == "__main__":
 
     # Display the behavioural weights of the model
     printLog(f'\nBehavioural weights of the model after scaling back:')
-    beta_tl = best_model.dcm_p.weight[0][0].cpu().item()
-    beta_tt = best_model.dcm_p.weight[0][1].cpu().item()
-    printLog(f'beta_tl = {beta_tl * (1/3):10.3f}')
-    printLog(f'beta_tt = {beta_tt * (1/10):10.3f}')
+    beta_hhc = best_model.dcm_p.weight[0][0].cpu().item()
+    beta_tti = best_model.dcm_p.weight[0][1].cpu().item()
+    printLog(f'beta_tti = {beta_hhc * (1/225):10.3f}')
+    printLog(f'beta_hhc = {beta_tti * (1/15):10.3f}')
     
     # Find the index where test_loss is minimum
     min_loss_index = test_loss.index(min(test_loss))

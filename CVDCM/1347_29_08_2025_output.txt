@@ -1,0 +1,4 @@
+CODE STARTED at: 1347_29_08_2025
+Using device: mps
+Hyperparameters: learning_rate = 1e-05, batch_size = 10, wd = 0.1
+Starting model training

@@ -12,8 +12,8 @@ set_verbosity_error()
 
 # Load image processor
 image_processor = AutoImageProcessor.from_pretrained('facebook/deit-base-distilled-patch16-224')
-image_processor.size['height'] = 384
-image_processor.size['width'] = 384
+image_processor.size['height'] = 224
+image_processor.size['width'] = 224
 image_processor.do_center_crop = False
 
 # Create class for dataset
@@ -52,10 +52,10 @@ class ImageChoiceDataset(Dataset):
             image2 = np.tile(image2,3)
         
         y_label  = torch.tensor(int( (self.annotations.loc[index, 'CHOICE']-1)==0)) # choice
-        tl1       = torch.tensor(float(self.annotations.loc[index, 'TL1']/3))       # price first image
-        tl2       = torch.tensor(float(self.annotations.loc[index, 'TL2']/3))       # price second image
-        tt1      = torch.tensor(float(self.annotations.loc[index, 'TT1']/10))       # travel time first image
-        tt2      = torch.tensor(float(self.annotations.loc[index, 'TT2']/10))       # travel time second image
+        c1       = torch.tensor(float(self.annotations.loc[index, 'C1']/225))       # price first image
+        c2       = torch.tensor(float(self.annotations.loc[index, 'C2']/225))       # price second image
+        tt1      = torch.tensor(float(self.annotations.loc[index, 'TT1']/15))       # travel time first image
+        tt2      = torch.tensor(float(self.annotations.loc[index, 'TT2']/15))       # travel time second image
         img_name1 = self.annotations.loc[index, 'IMG1']
         img_name2 = self.annotations.loc[index, 'IMG2']
         ID = self.annotations.loc[index, 'ID']
@@ -65,19 +65,14 @@ class ImageChoiceDataset(Dataset):
             image1 = image_processor(image1, return_tensors = "pt").pixel_values[0]
             image2 = image_processor(image2, return_tensors = "pt").pixel_values[0]
 
-            # if image1.shape[0]==1:
-            #     image1 = image1.repeat(3,1,1)
 
-            # if image2.shape[0]==1:
-            #     image2 = image2.repeat(3,1,1)
-                
-        return [image1, image2, y_label, tl1, tl2, tt1, tt2,img_name1,img_name2, ID]
+        return [image1, image2, y_label, c1, c2, tt1, tt2, img_name1, img_name2, ID]
 
-def data_to_cuda(image1, image2, tl1, tl2, tt1, tt2, y_label, device):
+def data_to_cuda(image1, image2, c1, c2, tt1, tt2, y_label, device):
         
     # Transfer cost and travel time to cuda
-    tl1 = tl1.to(device=device)
-    tl2 = tl2.to(device=device)
+    c1 = c1.to(device=device)
+    c2 = c2.to(device=device)
     tt1 = tt1.to(device=device)
     tt2 = tt2.to(device=device)
         
@@ -88,4 +83,4 @@ def data_to_cuda(image1, image2, tl1, tl2, tt1, tt2, y_label, device):
     y_label = y_label.unsqueeze(1)
     y_label = y_label.float()
     y_label = y_label.to(device=device)
-    return image1, image2, tl1, tl2, tt1, tt2, y_label
+    return image1, image2, c1, c2, tt1, tt2, y_label
