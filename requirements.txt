@@ -1,6 +1,6 @@
-torch==2.7.0
+torch==2.8.0
 numpy==1.26.1
 pandas==2.1.4
 scikit-image==0.22.0
 timm==0.9.7
-transformers==4.36.2
+transformers==4.55.4
