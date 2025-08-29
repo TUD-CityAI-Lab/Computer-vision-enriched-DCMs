@@ -1,5 +1,5 @@
 # Computer vision-enriched discrete choice models
-This repo contains the data that are used to train the computer vision-enriched discrete choice models (CV-DCM) proposed this [Van Cranenburgh & Garrido-Valenzuela (2025)](https://doi.org/10.1016/j.tra.2024.104300). A preprint is available in [here](assets/VanCranenburgh_GarridoValenzuela2024.pdf).
+This repo contains models and data to train the computer vision-enriched discrete choice models (CV-DCM) proposed in [Van Cranenburgh & Garrido-Valenzuela (2025)](https://doi.org/10.1016/j.tra.2024.104300). A preprint of the paper is available [here](assets/VanCranenburgh_GarridoValenzuela2024.pdf).
 
 
 ## Data
