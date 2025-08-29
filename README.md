@@ -30,7 +30,7 @@ More details about the data collection can be found in section 3 of the associat
 [Van Cranenburgh & Garrido-Valenzuela (2025)](https://doi.org/10.1016/j.tra.2024.104300).
 
 ## Discrete choice models
-In the folder [CVDCM](CVDCM), python code is made available to train and evaluate the CV-DCM models. In the folder [DCM](DCM), you can find the implementation of the traditional discrete choice models. Note that Appolo R is used for the estimation of the choice models, within a jupyter notebook.
+In the folder [CVDCM](CVDCM), python code is made available to train and evaluate the CV-DCM models. In the folder [DCM](DCM), you can find the implementation of the traditional discrete choice models. Note that Apollo R is used for the estimation of the choice models, within a jupyter notebook.
 
 ## License CC BY-NC-SA 4.0
 
