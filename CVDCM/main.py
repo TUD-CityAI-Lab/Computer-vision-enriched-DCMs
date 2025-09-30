@@ -27,6 +27,7 @@ if __name__ == "__main__":
     repo_root = Path(__file__).resolve().parent.parent # Adjust as necessary
     data_dir = repo_root / "data"
     img_path = data_dir / "images"
+    img_path = '/Users/sandervancranenburgh/Documents/Repos_and_data/Data/window_project_data/images'
     choice_data_file = data_dir / "data_CV_DCM.csv"
 
     # Now use img_path and choice_data_file in your code
@@ -71,8 +72,8 @@ if __name__ == "__main__":
 
     # Load the model
     working_folder = Path(os.path.dirname(os.path.realpath(__file__)))
-    path_pretrained_model = None
-    model = cvdcm_model(path_pretrained_model).to(device=device,non_blocking=False)
+    path_pretrained_model = working_folder / 'pretrained_models' / 'Model3_CVDCM_CE0585_retrained.pt' # Pretrained model path
+    model = cvdcm_model(path_pretrained_model, device=device).to(device=device,non_blocking=False)
 
     # Loss function
     criterion = nn.BCELoss(reduction='sum')

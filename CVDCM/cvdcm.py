@@ -4,34 +4,36 @@ import torch.nn as nn
 
 class cvdcm_model(nn.Module):
 
-    def __init__(self, path_pretrained_model=None):
+    def __init__(self, path_pretrained_model=None, device='cpu'):
         super(cvdcm_model, self).__init__()
         
-        # Define the CNN
+        # Set device
+        self.device = device if isinstance(device, torch.device) else torch.device(device)
+
+        # Define the feature extractor
         self.cvmodel = torch.hub.load('facebookresearch/deit:main', 'deit_base_patch16_224', pretrained=True)
         
-        # Define the linear-additive utility RUM for the feature map
+        # Define the linear-additive utility from the feature map
         self.dcm_f = nn.Linear(1000,1, bias = False)
         self.dcm_f.weight.data.normal_(mean=0.0, std=0.1)
-        
-        
-        # Define the linear-additive utility RUM for the monthly housing cost,commute travel time, and months
+
+        # Define the linear-additive utility from the numeric attributes
         self.dcm_p = nn.Linear(2,1,bias=False)
         self.dcm_p.weight = torch.nn.Parameter(self.dcm_p.weight.to(torch.float32))
 
-        # Starting values for traffic lights and cycling time
+        # Starting values
         self.dcm_p.weight.data[0][0].fill_(-0.90) # beta_hhc
         self.dcm_p.weight.data[0][1].fill_(-0.20) # beta_tti
 
+        # Load pretrained model
         if path_pretrained_model is not None:
-            self.load_state_dict(torch.load(path_pretrained_model), strict=True)
+            state = torch.load(path_pretrained_model, map_location=self.device)
+            self.load_state_dict(state, strict=True)
 
-    
     def forward_once(self,image,c,tt):
         
         # Extract features from image
-        feature_map = self.cvmodel(image)            
-        feature_map = torch.squeeze(feature_map)
+        feature_map = self.cvmodel(image).flatten(1)
           
         # Apply DCM to feature map
         V_f = self.dcm_f(feature_map) 
@@ -75,6 +77,15 @@ class cvdcm_model(nn.Module):
     
         return feature_map, V_f
 
+    def return_image_utility(self, image):
+        
+        # Extract features from image
+        feature_map = self.cvmodel(image).flatten(1)
 
+        # Apply DCM_f to features
+        V_f = self.dcm_f(feature_map) 
+
+        # Return image utility
+        return V_f
 
 
