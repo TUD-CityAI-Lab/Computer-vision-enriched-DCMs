@@ -43,3 +43,7 @@ coverage.xml
 # Environment files
 .env
 .env.*
+
+# .pth and .pt files
+*.pth
+*.pt
