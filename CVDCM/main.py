@@ -70,8 +70,7 @@ if __name__ == "__main__":
     test_loader  = DataLoader(dataset=dataset_test,  batch_size=batch_size, shuffle=False,num_workers=workers, pin_memory=True)
 
     # Load the model
-    working_folder = Path(os.path.dirname(os.path.realpath(__file__)))
-    path_pretrained_model = working_folder / 'pretrained_models' / 'Model3_CVDCM_CE0585_retrained.pt' # Pretrained model path
+    path_pretrained_model = None # repo_root / 'CVDCM' / 'pretrained_models' / 'Model3_CVDCM_CE0585_retrained.pt'
     model = cvdcm_model(path_pretrained_model, device=device).to(device=device,non_blocking=False)
 
     # Loss function
