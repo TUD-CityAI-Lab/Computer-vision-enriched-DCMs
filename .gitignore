@@ -47,3 +47,6 @@ coverage.xml
 # .pth and .pt files
 *.pth
 *.pt
+
+# saved_models directory
+saved_models/
