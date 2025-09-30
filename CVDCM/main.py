@@ -1,12 +1,12 @@
 import os
+from pathlib import Path
+from datetime import datetime
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
 from cvdcm import cvdcm_model
-from ImageChoicedata_preprocessing import ImageChoiceDataset
 from train import train
-from pathlib import Path
-from datetime import datetime
+from ImageChoicedata_preprocessing import ImageChoiceDataset
 
 # Clears the terminal
 # os.system('clear')
