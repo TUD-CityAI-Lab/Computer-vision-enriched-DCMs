@@ -1,16 +1,12 @@
+import os
 import torch
 import torch.nn as nn
-import torch.optim as optim
 from torch.utils.data import DataLoader
 from cvdcm import cvdcm_model
-import numpy as np
-import pandas as pd
-import os
-import platform
+from ImageChoicedata_preprocessing import ImageChoiceDataset
 from train import train
 from pathlib import Path
 from datetime import datetime
-from ImageChoicedata_preprocessing import ImageChoiceDataset
 
 # Clears the terminal
 # os.system('clear')
