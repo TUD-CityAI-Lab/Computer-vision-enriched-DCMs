@@ -26,7 +26,7 @@ if __name__ == "__main__":
     # Initialise paths relative to repo root
     repo_root = Path(__file__).resolve().parent.parent # Adjust as necessary
     data_dir = repo_root / "data"
-    img_path = data_dir / "images"
+    img_path = data_dir / "images" # Put your images in this folder
     choice_data_file = data_dir / "data_CV_DCM.csv"
 
     # Now use img_path and choice_data_file in your code
