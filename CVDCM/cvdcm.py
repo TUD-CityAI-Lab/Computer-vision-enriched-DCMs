@@ -1,7 +1,6 @@
 import torch
 import torch.nn as nn
 
-
 class cvdcm_model(nn.Module):
 
     def __init__(self, path_pretrained_model=None, device='cpu'):
