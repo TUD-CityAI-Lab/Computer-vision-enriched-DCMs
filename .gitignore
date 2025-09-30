@@ -48,5 +48,5 @@ coverage.xml
 *.pth
 *.pt
 
-# saved_models directory
-saved_models/
+# pretrained_models directory
+pretrained_models/
