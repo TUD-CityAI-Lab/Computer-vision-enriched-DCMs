@@ -23,14 +23,14 @@ The table below lists the most important variables in the data set:
 | `GENDER` | Gender of the respondent |
 | `PROVINCE` | Province of the respondent |
 | `POSTCODE` | Postcode of the respondent |
-| `train` | 1 if the respondent was in the training set |
-| `test` | 1 if the respondent was in the test set |
+| `train` | 1 if the observation was in the training set |
+| `test` | 1 if the observation was in the test set |
 
 More details about the data collection can be found in section 3 of the associated paper:
 [Van Cranenburgh & Garrido-Valenzuela (2025)](https://doi.org/10.1016/j.tra.2024.104300).
 
 ## Discrete choice models
-In the folder [CVDCM](CVDCM), python code is made available to train and evaluate the CV-DCM models. In the folder [DCM](DCM), you can find the implementation of the traditional discrete choice models. Note that Apollo R is used for the estimation of the traditional choice models, within a jupyter notebook.
+In the folder [CVDCM](CVDCM), python code is made available to train and evaluate the CV-DCM models. It contain code to train a simple CV-DCM model, without interaction terms and dummies for the month of the year. In the folder [DCM](DCM), you can find the implementation of the traditional discrete choice models. Note that Apollo R is used for the estimation of the traditional choice models, within a jupyter notebook.
 
 ## License CC BY-NC-SA 4.0
 
