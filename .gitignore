@@ -53,3 +53,6 @@ coverage.xml
 
 # pretrained_models directory
 pretrained_models/
+
+# Data file with postcode info
+data/data_CV_DCM_with_postcodes.csv
